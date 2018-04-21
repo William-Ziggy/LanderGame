@@ -42,8 +42,8 @@ public class GamePlay extends JPanel implements Runnable{
         
         
         for(int i=0; i<=1; i++){
-            b.add(new Background(i*800, 0, 0, this));
-            b.add(new Background(i*800, 800, 1, this));
+            b.add(new Background(i*800, 0, this));
+            b.add(new Background(i*800, 800, this));
         }
         
         
@@ -108,7 +108,6 @@ public class GamePlay extends JPanel implements Runnable{
         for(Background i : b){
             i.tick();
         }
-        System.out.println("LOL");
         for(Background i : b){
             if(!i.getOccupiedX()){
                 if(i.getX()>=0&&keyLeft){
@@ -117,7 +116,7 @@ public class GamePlay extends JPanel implements Runnable{
                     i.setX(i.getX()+1600);
                 }
             }
-            if(!i.getOccupiedY()&&i.getType()==1){
+            if(!i.getOccupiedY()){
                 if(i.getY()>=0&&keyDown){
                     i.setY(i.getY()-1600);
                 }else if(i.getY()<0&&keyUp){
@@ -128,7 +127,7 @@ public class GamePlay extends JPanel implements Runnable{
         
         
         
-        int speed = 10;
+        int speed = 50;
         
         if(keyLeft){
             for(Background i : b){
