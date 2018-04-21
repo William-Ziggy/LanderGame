@@ -7,6 +7,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import javax.swing.JPanel;
 
 public class GamePlay extends JPanel implements Runnable{
@@ -33,6 +34,7 @@ public class GamePlay extends JPanel implements Runnable{
             space = loader.loadImage("/space.png");
         }catch(IOException e){
             e.printStackTrace();
+        	
         }
         
         b = new ArrayList<Background>();
@@ -106,7 +108,7 @@ public class GamePlay extends JPanel implements Runnable{
         for(Background i : b){
             i.tick();
         }
-        
+        System.out.println("LOL");
         for(Background i : b){
             if(!i.getOccupiedX()){
                 if(i.getX()>=0&&keyLeft){
