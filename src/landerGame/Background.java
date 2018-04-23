@@ -1,4 +1,4 @@
-package LanderGame;
+package landerGame;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;

@@ -1,8 +1,11 @@
-package LanderGame;
+package landerGame;
 
-import java.awt.Color;
+import java.awt.Canvas;
+import java.awt.Color; 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -10,14 +13,19 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-public class GamePlay extends JPanel implements Runnable{
+import com.sun.prism.Image;
+
+public class GamePlay extends Canvas implements Runnable{
     
     private boolean running=false;
     private Thread thread;
 
     private BufferedImage spriteSheet = null;
     private BufferedImage space = null;
+    private BufferedImage lem = null;
     private ArrayList<Background> b;
+    
+    private LunarModule lm;
     
     
     private boolean keyLeft, keyRight, keyUp, keyDown;
@@ -26,26 +34,29 @@ public class GamePlay extends JPanel implements Runnable{
     public void init(){
         addKeyListener(new KeyInput(this));
         setFocusable(true);
+        requestFocus();
         
         BufferedImageLoader loader = new BufferedImageLoader();
         
         try{ //Alla bilder.
             spriteSheet = loader.loadImage("/sprite_sheet.png"); 
             space = loader.loadImage("/space.png");
+            lem = loader.loadImage("/LEM.png");
         }catch(IOException e){
             e.printStackTrace();
         	
         }
         
         b = new ArrayList<Background>();
+        
         //Generera de fyra backgrundsbilderna
-        
-        
         for(int i=0; i<=1; i++){
             b.add(new Background(i*800, 0, this));
             b.add(new Background(i*800, 800, this));
         }
         
+        //Generera LEMen
+        lm = new LunarModule(400, 400, 0, 0, this);
         
     }
     
@@ -108,6 +119,10 @@ public class GamePlay extends JPanel implements Runnable{
         for(Background i : b){
             i.tick();
         }
+        
+        lm.tick();
+        
+        
         for(Background i : b){
             if(!i.getOccupiedX()){
                 if(i.getX()>=0&&keyLeft){
@@ -127,8 +142,8 @@ public class GamePlay extends JPanel implements Runnable{
         
         
         
-        int speed = 50;
-        
+        int speed = 2;
+
         if(keyLeft){
             for(Background i : b){
                 i.setX(i.getX()+speed);
@@ -154,19 +169,22 @@ public class GamePlay extends JPanel implements Runnable{
     }
     
     private void render(){
-        BufferStrategy bs = Main.frame.getBufferStrategy();
+        BufferStrategy bs = this.getBufferStrategy();
         
         if(bs == null){
-            Main.frame.createBufferStrategy(3);
+            this.createBufferStrategy(3);
             return;
         }
         Graphics g = bs.getDrawGraphics();
+        
         //////
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, 800, 800);
         for(Background i : b){
             i.render(g);
         }
+        
+        lm.render(g);
         //////
         g.dispose();
         bs.show();
@@ -211,6 +229,10 @@ public class GamePlay extends JPanel implements Runnable{
     
     public BufferedImage getSpaceImage(){
         return space;
+    }
+    
+    public BufferedImage getLemImage() {
+    	return lem;
     }
     
 }

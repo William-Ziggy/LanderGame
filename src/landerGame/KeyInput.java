@@ -1,4 +1,4 @@
-package LanderGame;
+package landerGame;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
