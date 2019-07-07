@@ -17,6 +17,8 @@ import com.sun.prism.Image;
 
 public class GamePlay extends Canvas implements Runnable{
     
+	
+	//Deklarerar medlemsvariablerna
     private boolean running=false;
     private Thread thread;
 
@@ -26,7 +28,6 @@ public class GamePlay extends Canvas implements Runnable{
     private ArrayList<Background> b;
     
     private LunarModule lm;
-    
     
     private boolean keyLeft, keyRight, keyUp, keyDown;
     
@@ -49,14 +50,14 @@ public class GamePlay extends Canvas implements Runnable{
         
         b = new ArrayList<Background>();
         
-        //Generera de fyra backgrundsbilderna
+        //Initierar de fyra backgrundsbilderna
         for(int i=0; i<=1; i++){
             b.add(new Background(i*800, 0, this));
             b.add(new Background(i*800, 800, this));
         }
         
-        //Generera LEMen
-        lm = new LunarModule(400, 400, 0, 0, this);
+        //Initierar LEMen
+        lm = new LunarModule(400, 400, 200, 200, 0, this);
         
     }
     
@@ -116,14 +117,12 @@ public class GamePlay extends Canvas implements Runnable{
     }
     
     private void tick(){
-        for(Background i : b){
-            i.tick();
-        }
         
         lm.tick();
         
         
         for(Background i : b){
+        	i.tick();
             if(!i.getOccupiedX()){
                 if(i.getX()>=0&&keyLeft){
                     i.setX(i.getX()-1600);
@@ -142,7 +141,7 @@ public class GamePlay extends Canvas implements Runnable{
         
         
         
-        int speed = 2;
+        int speed = 10;
 
         if(keyLeft){
             for(Background i : b){
@@ -185,6 +184,7 @@ public class GamePlay extends Canvas implements Runnable{
         }
         
         lm.render(g);
+        
         //////
         g.dispose();
         bs.show();
