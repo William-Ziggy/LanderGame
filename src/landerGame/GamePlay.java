@@ -29,7 +29,7 @@ public class GamePlay extends Canvas implements Runnable{
     
     private LunarModule lm;
     
-    private boolean keyLeft, keyRight, keyUp, keyDown;
+    private boolean keyLeft, keyRight, keyUp, keyDown, negRot, posRot;
     
     
     public void init(){
@@ -57,7 +57,7 @@ public class GamePlay extends Canvas implements Runnable{
         }
         
         //Initierar LEMen
-        lm = new LunarModule(400, 400, 200, 200, 0, this);
+        lm = new LunarModule(400, 400, 200, 200, this);
         
     }
     
@@ -162,6 +162,15 @@ public class GamePlay extends Canvas implements Runnable{
             }
         }
         
+        
+        double change = 0.002;
+        
+        if(posRot) {
+        	lm.changeRotSpeed(change);
+        }else if(negRot) {
+        	lm.changeRotSpeed(-change);
+        }
+        
         //Testa om de är upptagna
         
         
@@ -204,6 +213,14 @@ public class GamePlay extends Canvas implements Runnable{
         }else if(key == KeyEvent.VK_UP){
             keyDown = true;
         }
+        
+        if(key == KeyEvent.VK_A) {
+        	posRot = true;
+        }else if(key == KeyEvent.VK_D) {
+        	negRot = true;
+        }
+        
+        
     }
     
     public void keyReleased(KeyEvent e){
@@ -221,6 +238,11 @@ public class GamePlay extends Canvas implements Runnable{
             keyDown = false;
         }
         
+        if(key == KeyEvent.VK_A) {
+        	posRot = false;
+        }else if(key == KeyEvent.VK_D) {
+        	negRot = false;
+        }
     }
     
     public BufferedImage getSpriteSheet(){
