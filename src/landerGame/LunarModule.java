@@ -13,9 +13,9 @@ public class LunarModule {
 	private int height;
 	private int dx;
 	private int dy;
+	private double angle;
 	private double rotSpeed;
 	private AffineTransform at;
-
 	public static BufferedImage lem;
 	
 	public LunarModule(int x, int y, int width, int height, GamePlay game) {
@@ -26,7 +26,8 @@ public class LunarModule {
 		this.y = y-height/2;
 		this.dx = 0;
 		this.dy = 0;
-		this.rotSpeed = 0;
+		this.angle = 0;
+		this.rotSpeed = 0; 
 		this.at = new AffineTransform();
 		
 		lem = game.getLemImage();
@@ -51,8 +52,8 @@ public class LunarModule {
 	}
 	
 	public void rotate() {
-		this.at.rotate(rotSpeed, lem.getWidth()/2, lem.getHeight()/2);
-		//this.at.translate(-lem.getWidth()/2, -lem.getHeight()/2);
+		this.angle+=rotSpeed;
+		this.at.rotate(-rotSpeed, lem.getWidth()/2, lem.getHeight()/2);
 	}
 	
 	public double getRotSpeed() {

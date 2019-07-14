@@ -167,7 +167,8 @@ public class GamePlay extends Canvas implements Runnable{
         
         if(posRot) {
         	lm.changeRotSpeed(change);
-        }else if(negRot) {
+        }
+        if(negRot) {
         	lm.changeRotSpeed(-change);
         }
         
@@ -194,6 +195,9 @@ public class GamePlay extends Canvas implements Runnable{
         
         lm.render(g);
         
+        String rpm = Double.toString(Math.round(100.0*1800*lm.getRotSpeed()/Math.PI)/100);
+        g.drawString("RPM: " + rpm, 10, 10);
+        
         //////
         g.dispose();
         bs.show();
@@ -216,7 +220,7 @@ public class GamePlay extends Canvas implements Runnable{
         
         if(key == KeyEvent.VK_A) {
         	posRot = true;
-        }else if(key == KeyEvent.VK_D) {
+        }if(key == KeyEvent.VK_D) {
         	negRot = true;
         }
         
@@ -240,7 +244,8 @@ public class GamePlay extends Canvas implements Runnable{
         
         if(key == KeyEvent.VK_A) {
         	posRot = false;
-        }else if(key == KeyEvent.VK_D) {
+        }
+        if(key == KeyEvent.VK_D) {
         	negRot = false;
         }
     }
